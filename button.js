@@ -12,6 +12,7 @@ game.Button = game.Class.extend({
 	border: 0xffffff,
 	borderSize: 3,
 	container: null,
+	scale: false,
 
 	sprite: null,
     texts: null,
@@ -27,6 +28,7 @@ game.Button = game.Class.extend({
 		this.borderSize = settings.borderSize;
 		this.container  = settings.container;
 		this.callback 	= callback;
+		this.scale		= settings.scale;
 
 		this.sprite = new game.Graphics();
 		this.sprite.beginFill(this.border);
@@ -44,6 +46,10 @@ game.Button = game.Class.extend({
 
 		this.sprite.mousedown   = this.onClick.bind(this);
 		this.sprite.mouseup	 	= this.onRelease.bind(this);
+		this.sprite.mouseover	= this.onHover.bind(this);
+		this.sprite.mouseout	= this.onLeave.bind(this);
+
+		console.log(this.sprite);
 
 		// Text
 		this.texts = new game.BitmapText(this.text, { font: this.font });
@@ -56,27 +62,43 @@ game.Button = game.Class.extend({
 
 	onClick: function(event)
 	{
-		game.scene.current = this;
-		this.offset.x = this.sprite.position.x - event.global.x;
-		this.offset.y = this.sprite.position.y - event.global.y;
-			
-		this.sprite.scale.set(1.1, 1.1);
-		this.texts.scale.set(1.1, 1.1);
+		if (this.scale)
+		{
+			game.scene.current = this;
+			this.offset.x = this.sprite.position.x - event.global.x;
+			this.offset.y = this.sprite.position.y - event.global.y;
+				
+			this.sprite.scale.set(1.1, 1.1);
+			this.texts.scale.set(1.1, 1.1);
 
-		// Place sprite and text to top of container
-		this.sprite.remove();
-		this.sprite.addTo(this.container);
-		this.texts.remove();
-		this.texts.addTo(this.container);
+			// Place sprite and text to top of container
+			this.sprite.remove();
+			this.sprite.addTo(this.container);
+			this.texts.remove();
+			this.texts.addTo(this.container);
+		}
 
 		this.callback();
 	},
 
 	onRelease: function()
 	{
-		game.scene.current = null;
-		this.sprite.scale.set(1.0, 1.0);
-		this.texts.scale.set(1.0, 1.0);
+		if (this.scale)
+		{
+			game.scene.current = null;
+			this.sprite.scale.set(1.0, 1.0);
+			this.texts.scale.set(1.0, 1.0);
+		}
+	},
+
+	onHover: function()
+	{
+		this.sprite.alpha = 0.9;
+	},
+
+	onLeave: function()
+	{
+		this.sprite.alpha = 1;
 	}
 });
 
