@@ -45,11 +45,9 @@ game.Button = game.Class.extend({
         this.offset = new game.Point();
 
 		this.sprite.mousedown   = this.onClick.bind(this);
-		this.sprite.mouseup	 	= this.onRelease.bind(this);
+		this.sprite.mouseup	= this.onRelease.bind(this);
 		this.sprite.mouseover	= this.onHover.bind(this);
 		this.sprite.mouseout	= this.onLeave.bind(this);
-
-		console.log(this.sprite);
 
 		// Text
 		this.texts = new game.BitmapText(this.text, { font: this.font });
