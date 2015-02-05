@@ -4,8 +4,8 @@ game.module(
 .body(function() {
 	
 game.Button = game.Class.extend({
-	text: "Button",
-	font: "Arial",
+	text: 'Button',
+	font: { family: 'Verdana', size: 14, color: '#222222' },
 	position: { x: 0, y: 0 },
 	size: { width: 100, height: 40 },
 	background: 0x000000,
@@ -19,16 +19,16 @@ game.Button = game.Class.extend({
 	callback: null,
 
 	init: function(settings, callback) {
-		this.text = settings.text;
-		this.font = settings.font;
-		this.position = settings.position;
-		this.size = settings.size;
-		this.background = settings.background;
-		this.border = settings.border;
-		this.borderSize = settings.borderSize;
+		this.text = settings.text || this.text;
+		this.font = settings.font || this.font;
+		this.position = settings.position || this.position;
+		this.size = settings.size || this.size;
+		this.background = settings.background || this.background;
+		this.border = settings.border || this.border;
+		this.borderSize = settings.borderSize || this.borderSize;
 		this.container  = settings.container;
 		this.callback 	= callback;
-		this.scale		= settings.scale;
+		this.scale		= settings.scale|| this.scale;
 
 		this.sprite = new game.Graphics();
 		this.sprite.beginFill(this.border);
@@ -45,13 +45,14 @@ game.Button = game.Class.extend({
         this.offset = new game.Point();
 
 		this.sprite.mousedown   = this.onClick.bind(this);
-		this.sprite.mouseup	= this.onRelease.bind(this);
+		this.sprite.mouseup	 	= this.onRelease.bind(this);
 		this.sprite.mouseover	= this.onHover.bind(this);
 		this.sprite.mouseout	= this.onLeave.bind(this);
 
 		// Text
-		this.texts = new game.BitmapText(this.text, { font: this.font });
-		this.texts.position.set(this.position.x + this.size.width / 2 - this.texts.textWidth / 2, this.position.y + this.size.height / 2 - this.texts.textHeight / 2);
+		//this.texts = new game.BitmapText(this.text, { font: this.font });
+		this.texts = new game.Text(this.text, { font: this.font.size + "px " + this.font.family, fill: this.font.color });
+		this.texts.position.set(this.position.x + this.size.width / 2 - this.texts.width / 2, this.position.y + this.size.height / 2 - this.texts.height / 2);
 
 		this.container.addChild(this.sprite);
 		this.container.addChild(this.texts);
