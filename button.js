@@ -19,33 +19,34 @@ game.Button = game.Class.extend({
 	callback: null,
 
 	init: function(settings, callback) {
-		this.text = settings.text || this.text;
-		this.font = settings.font || this.font;
-		this.position = settings.position || this.position;
-		this.size = settings.size || this.size;
+		this.text 	= settings.text || this.text;
+		this.font 	= settings.font || this.font;
+		this.position 	= settings.position || this.position;
+		this.size 	= settings.size || this.size;
 		this.background = settings.background || this.background;
-		this.border = settings.border || this.border;
+		this.border 	= settings.border || this.border;
 		this.borderSize = settings.borderSize || this.borderSize;
 		this.container  = settings.container;
 		this.callback 	= callback;
-		this.scale		= settings.scale|| this.scale;
+		this.scale	= settings.scale || this.scale;
 
 		this.sprite = new game.Graphics();
 		this.sprite.beginFill(this.border);
-		this.sprite.drawRect(0, 0, this.size.width, this.size.height);
+		this.sprite.drawRect((-this.size.width / 2), (-this.size.height / 2), this.size.width, this.size.height);
 
 		this.sprite.beginFill(this.background);
-		this.sprite.drawRect(0 + this.borderSize, 0 + this.borderSize, this.size.width - this.borderSize * 2, this.size.height - this.borderSize * 2);
+		this.sprite.drawRect((-this.size.width / 2) + this.borderSize, (-this.size.height / 2) + this.borderSize, this.size.width - this.borderSize * 2, this.size.height - this.borderSize * 2);
 
-		this.sprite.position.set(this.position.x, this.position.y);
+		this.sprite.position.set(this.position.x - (-this.size.width / 2), this.position.y - (-this.size.height / 2));
+		//this.sprite.origin.set(0.5, 0.5);
 
 		this.sprite.interactive = true;
 		this.sprite.buttonMode  = true;
 
-        this.offset = new game.Point();
+        	this.offset = new game.Point();
 
 		this.sprite.mousedown   = this.onClick.bind(this);
-		this.sprite.mouseup	 	= this.onRelease.bind(this);
+		this.sprite.mouseup	= this.onRelease.bind(this);
 		this.sprite.mouseover	= this.onHover.bind(this);
 		this.sprite.mouseout	= this.onLeave.bind(this);
 
@@ -68,7 +69,6 @@ game.Button = game.Class.extend({
 			this.offset.y = this.sprite.position.y - event.global.y;
 				
 			this.sprite.scale.set(1.1, 1.1);
-			this.texts.scale.set(1.1, 1.1);
 
 			// Place sprite and text to top of container
 			this.sprite.remove();
@@ -86,7 +86,6 @@ game.Button = game.Class.extend({
 		{
 			game.scene.current = null;
 			this.sprite.scale.set(1.0, 1.0);
-			this.texts.scale.set(1.0, 1.0);
 		}
 	},
 
