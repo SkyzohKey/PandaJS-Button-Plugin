@@ -15,10 +15,11 @@ game.Button = game.Class.extend({
 	scale: false,
 
 	sprite: null,
-    texts: null,
+ 	texts: null,
 	callback: null,
 
 	init: function(settings, callback) {
+		// Use var in settings, if not declared use default values.
 		this.text 	= settings.text || this.text;
 		this.font 	= settings.font || this.font;
 		this.position 	= settings.position || this.position;
@@ -30,16 +31,19 @@ game.Button = game.Class.extend({
 		this.callback 	= callback;
 		this.scale	= settings.scale || this.scale;
 
+		//-> Button.
+		// Declare the base of our button.
 		this.sprite = new game.Graphics();
+		
+		// Draw the border.
 		this.sprite.beginFill(this.border);
 		this.sprite.drawRect((-this.size.width / 2), (-this.size.height / 2), this.size.width, this.size.height);
-
+		
+		// Draw the button.
 		this.sprite.beginFill(this.background);
 		this.sprite.drawRect((-this.size.width / 2) + this.borderSize, (-this.size.height / 2) + this.borderSize, this.size.width - this.borderSize * 2, this.size.height - this.borderSize * 2);
 
 		this.sprite.position.set(this.position.x - (-this.size.width / 2), this.position.y - (-this.size.height / 2));
-		//this.sprite.origin.set(0.5, 0.5);
-
 		this.sprite.interactive = true;
 		this.sprite.buttonMode  = true;
 
@@ -50,13 +54,12 @@ game.Button = game.Class.extend({
 		this.sprite.mouseover	= this.onHover.bind(this);
 		this.sprite.mouseout	= this.onLeave.bind(this);
 
-		// Text
-		//this.texts = new game.BitmapText(this.text, { font: this.font });
+		//-> Text
 		this.texts = new game.Text(this.text, { font: this.font.size + "px " + this.font.family, fill: this.font.color });
-		//this.texts.position.set(this.position.x + (this.size.width / 2) - this.texts.width / 2, this.position.y + this.size.height / 2 - this.texts.height);
 		this.texts.position.set(this.position.x + this.size.width / 2, this.position.y + this.size.height / 2);
 		this.texts.anchor.set(0.5, 0.5);
 
+		// Add our objects to the specified container.
 		this.container.addChild(this.sprite);
 		this.container.addChild(this.texts);
 		return this.sprite;
