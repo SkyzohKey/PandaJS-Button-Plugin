@@ -1,5 +1,7 @@
 # PandaJS-Button-Plugin
 
+A simple Button plugin to make fast buttons over **PandaJS**.
+
 ## Screenshot
 ![Example](http://i.imgur.com/PbXDHLk.png)
 
