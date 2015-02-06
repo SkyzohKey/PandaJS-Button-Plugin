@@ -16,5 +16,7 @@ this.btn = new game.Button({
 	background: 0xffbd31,
 	border: 0x262626,
 	borderSize: 2
-}, function () { console.log('Button clicked !!'); });
+}, function () { 
+	console.log('Button clicked !!');
+});
 ```
