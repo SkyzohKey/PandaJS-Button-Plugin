@@ -17,8 +17,16 @@ this.btn = new game.Button({
 	size: { width: 200, height: 45 },
 	background: 0xffbd31,
 	border: 0x262626,
-	borderSize: 2
+	borderSize: 2,
+	enabled: true // If true, the button becomes clickable.
 }, function () { 
 	console.log('Button clicked !!');
 });
+```
+
+## Methods
+```javascript
+this.btn.setText("My cool new text");
+this.btn.disable(); // Button is not clickable now.
+this.btn.enable(); // Button becomes clickable !
 ```
