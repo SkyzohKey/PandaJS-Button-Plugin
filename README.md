@@ -1,4 +1,8 @@
 # PandaJS-Button-Plugin
+
+## Screenshot
+![Example](http://i.imgur.com/PbXDHLk.png)
+
 ## Usage
 
 ```javascript
