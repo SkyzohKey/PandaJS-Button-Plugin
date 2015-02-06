@@ -53,7 +53,9 @@ game.Button = game.Class.extend({
 		// Text
 		//this.texts = new game.BitmapText(this.text, { font: this.font });
 		this.texts = new game.Text(this.text, { font: this.font.size + "px " + this.font.family, fill: this.font.color });
-		this.texts.position.set(this.position.x + this.size.width / 2 - this.texts.width / 2, this.position.y + this.size.height / 2 - this.texts.height / 2);
+		//this.texts.position.set(this.position.x + (this.size.width / 2) - this.texts.width / 2, this.position.y + this.size.height / 2 - this.texts.height);
+		this.texts.position.set(this.position.x + this.size.width / 2, this.position.y + this.size.height / 2);
+		this.texts.anchor.set(0.5, 0.5);
 
 		this.container.addChild(this.sprite);
 		this.container.addChild(this.texts);
@@ -69,6 +71,7 @@ game.Button = game.Class.extend({
 			this.offset.y = this.sprite.position.y - event.global.y;
 				
 			this.sprite.scale.set(1.1, 1.1);
+			this.texts.scale.set(1.1, 1.1);
 
 			// Place sprite and text to top of container
 			this.sprite.remove();
@@ -86,6 +89,7 @@ game.Button = game.Class.extend({
 		{
 			game.scene.current = null;
 			this.sprite.scale.set(1.0, 1.0);
+			this.texts.scale.set(1.0, 1.0);
 		}
 	},
 
