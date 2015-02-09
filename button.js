@@ -16,7 +16,7 @@ game.Button = game.Class.extend({
 	enabled: true,
 
 	sprite: null,
-    	texts: null,
+    texts: null,
 	callback: null,
 
 	init: function(settings, callback) {
@@ -24,16 +24,16 @@ game.Button = game.Class.extend({
 		// Check for empty settings.
 		settings = settings ? settings : {};
 
-		this.text 	= settings.text || this.text;
-		this.font 	= settings.font || this.font;
+		this.text 		= settings.text || this.text;
+		this.font 		= settings.font || this.font;
 		this.position 	= settings.position || this.position;
-		this.size 	= settings.size || this.size;
+		this.size 		= settings.size || this.size;
 		this.background	= settings.background || this.background;
 		this.border 	= settings.border || this.border;
 		this.borderSize	= settings.borderSize || this.borderSize;
 		this.container	= settings.container;
 		this.callback	= callback;
-		this.scale	= settings.scale || this.scale;
+		this.scale		= settings.scale || this.scale;
 		this.enabled	= settings.enabled || this.enabled;
 
 		this.render(); // Render function.
@@ -63,7 +63,7 @@ game.Button = game.Class.extend({
 			this.sprite.buttonMode	= true;
 
 			this.sprite.mousedown	= this.onClick.bind(this);
-			this.sprite.mouseup	= this.onRelease.bind(this);
+			this.sprite.mouseup		= this.onRelease.bind(this);
 			this.sprite.mouseover	= this.onHover.bind(this);
 			this.sprite.mouseout	= this.onLeave.bind(this);
 		}
@@ -84,6 +84,7 @@ game.Button = game.Class.extend({
 
 	setText: function(text)
 	{
+		this.text = text;
 		this.texts.setText(text);
 		this.texts.remove();
 		this.texts.addTo(this.container);
@@ -133,8 +134,6 @@ game.Button = game.Class.extend({
 			this.texts.remove();
 			this.texts.addTo(this.container);
 		}
-
-		this.callback();
 	},
 
 	onRelease: function()
@@ -148,6 +147,8 @@ game.Button = game.Class.extend({
 			this.sprite.scale.set(1.0, 1.0);
 			this.texts.scale.set(1.0, 1.0);
 		}
+
+		this.callback();
 	},
 
 	onHover: function()
@@ -163,7 +164,18 @@ game.Button = game.Class.extend({
 		if (!this.enabled)
 			return;
 		
+		if (this.scale)
+		{
+			this.sprite.scale.set(1.0, 1.0);
+			this.texts.scale.set(1.0, 1.0);
+		}
+
 		this.sprite.alpha = 1;
+
+		this.sprite.remove();
+		this.sprite.addTo(this.container);
+		this.texts.remove();
+		this.texts.addTo(this.container);
 	}
 });
 
